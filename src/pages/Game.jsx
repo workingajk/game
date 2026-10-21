@@ -34,7 +34,11 @@ function Timer({ timeout }) {
             // return;
         }
     }, [time]);
-    return <>{time}</>;
+    return (
+        <p className="font-bold">
+            Countdown: <span className="text-3xl font-extrabold"> {time}</span>
+        </p>
+    );
 }
 
 function Square({ index, moleIndex, handleClick }) {
@@ -45,7 +49,7 @@ function Square({ index, moleIndex, handleClick }) {
             onClick={() => handleClick(index)}
             style={{ cursor: `url("${hammerImg}") 32 32, auto` }}
         >
-            {moleIndex == index ? (
+            {moleIndex === index ? (
                 <div className="static flex flex-col">
                     <img
                         src={moleImg}
@@ -59,25 +63,31 @@ function Square({ index, moleIndex, handleClick }) {
                     />
                 </div>
             ) : (
-                <img src={holeImg} />
+                <img src={holeImg} alt="hole image" />
             )}
         </button>
     );
 }
 
 function Score({ score }) {
-    return <p>Score:{score}</p>;
+    return (
+        <p className="font-bold">
+            Score: <span className="text-3xl font-extrabold"> {score}</span>
+        </p>
+    );
 }
 
 function Game() {
     const [score, setScore] = useState(0);
-    const [moleIndex, setMoleIndex] = useState(Math.floor(Math.random() * 9));
+    const [moleIndex, setMoleIndex] = useState(() =>
+        Math.floor(Math.random() * 9),
+    );
     const [gameOver, setGameOver] = useState(false);
     const nav = useNavigate();
 
     useEffect(() => {
         if (gameOver) {
-            if (localStorage.getItem("topScore") < score) {
+            if (Number(localStorage.getItem("topScore") ?? 0) < score) {
                 localStorage.setItem("topScore", score);
             }
             Swal.fire({
@@ -112,7 +122,6 @@ function Game() {
             src: [bgMusic],
             loop: true,
             volume: 0.2,
-            
         });
 
         const smash = new Howl({
@@ -123,7 +132,7 @@ function Game() {
         musicRef.current = music;
         smashRef.current = smash;
 
-        music.play()
+        music.play();
         return () => {
             // musicRef.current.unload()
             music.unload();
@@ -140,18 +149,22 @@ function Game() {
             setMoleIndex(Math.floor(Math.random() * 9));
             smashRef.current.play();
             // smash.play();
-        } else {
-            setScore((prev) => prev - 1);
         }
+        
+        // else {
+        //     setScore((prev) => prev - 1);
+        // }
         // console.log(moleIndex);
     };
-    console.log(hammerImg);
+    // console.log(hammerImg);
 
     return (
         <>
-            <h1 className="text-2xl font-bold text-center">Wack-A-Mole</h1>
-            <div>
-                {" "}
+            <div className="flex p-4 justify-end items-center">
+                <div className="text-center flex-1">
+                    <p>Hit maximum moles in the given amount of time.</p>
+                    <Timer timeout={setGameOver} />
+                </div>{" "}
                 {musicEnabled ? (
                     <button
                         onClick={playMusic}
@@ -169,11 +182,10 @@ function Game() {
                         music OFF{" "}
                     </button>
                 )}{" "}
-                <Timer timeout={setGameOver} />
             </div>
             <div
                 className="grid grid-flow-col grid-rows-3 gap-4 justify-center align-center p-13"
-                style={{ cursor: `url("${hammerImg}") 32 32, auto` }}
+                style={{ cursor: `url("${hammerImg}") 32 32, auto`, }}
             >
                 {Array.from({ length: 9 }, (_, index) => (
                     <Square
