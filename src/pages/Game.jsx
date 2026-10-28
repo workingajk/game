@@ -150,7 +150,7 @@ function Game() {
             smashRef.current.play();
             // smash.play();
         }
-        
+
         // else {
         //     setScore((prev) => prev - 1);
         // }
@@ -185,7 +185,7 @@ function Game() {
             </div>
             <div
                 className="grid grid-flow-col grid-rows-3 gap-4 justify-center align-center p-13"
-                style={{ cursor: `url("${hammerImg}") 32 32, auto`, }}
+                style={{ cursor: `url("${hammerImg}") 32 32, auto` }}
             >
                 {Array.from({ length: 9 }, (_, index) => (
                     <Square
