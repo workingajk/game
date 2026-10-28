@@ -2,6 +2,7 @@
 
 A fast-paced, interactive **Whack-A-Mole** web game built with **React 19**, **Vite**, and **Tailwind CSS**. Test your reflexes by whacking as many moles as possible before the 60-second countdown expires!
 
+**[Vercel Live Link](https://whaack-the-mole.netlify.app/)**
 ---
 
 ## ✨ Features
